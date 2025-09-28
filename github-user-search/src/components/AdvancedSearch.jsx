@@ -63,7 +63,7 @@ export default function AdvancedSearch() {
       </form>
 
       {loading && <p className="mt-6">Loading...</p>}
-      {error && <p className="mt-6 text-red-600">Error fetching users.</p>}
+      {error && <p className="mt-4 text-red-600">Looks like we cant find the user</p>}
 
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {users.map((u) => (
