@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Login from './components/Login';
@@ -33,6 +33,7 @@ const Navigation = () => {
         
         {isAuthenticated ? (
           <>
+            {/* Protected routes navigation */}
             <Link to="/profile" className={isActiveLink('/profile')}>Profile</Link>
             <Link to="/blog" className={isActiveLink('/blog')}>Blog</Link>
             <Link to="/users" className={isActiveLink('/users')}>Users</Link>
@@ -62,19 +63,21 @@ function App() {
               {/* Public Routes */}
               <Route path="/login" element={<Login />} />
               
-              {/* Protected Routes */}
+              {/* Protected Routes Implementation */}
               <Route path="/" element={
                 <ProtectedRoute>
                   <Dashboard />
                 </ProtectedRoute>
               } />
               
+              {/* Profile with nested routes */}
               <Route path="/profile/*" element={
                 <ProtectedRoute>
                   <Profile />
                 </ProtectedRoute>
               } />
               
+              {/* Blog with dynamic routing */}
               <Route path="/blog" element={
                 <ProtectedRoute>
                   <Blog />
@@ -87,6 +90,7 @@ function App() {
                 </ProtectedRoute>
               } />
               
+              {/* Users with dynamic routing */}
               <Route path="/users" element={
                 <ProtectedRoute>
                   <Users />
@@ -112,7 +116,7 @@ function App() {
           </main>
           
           <footer className="app-footer">
-            <p>Advanced React Router Demo - Nested, Dynamic & Protected Routes</p>
+            <p>Advanced React Router Demo - Features: Nested Routes, Dynamic Routing, Protected Routes</p>
           </footer>
         </div>
       </Router>
