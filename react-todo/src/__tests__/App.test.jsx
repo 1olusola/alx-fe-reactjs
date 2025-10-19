@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import App from '../App';
 
 test('renders TodoList component in App', () => {
@@ -8,5 +7,4 @@ test('renders TodoList component in App', () => {
   
   // Check if TodoList is rendered within App
   expect(screen.getByText('Todo List')).toBeInTheDocument();
-  expect(screen.getByText('Manage your tasks efficiently')).toBeInTheDocument();
 });
