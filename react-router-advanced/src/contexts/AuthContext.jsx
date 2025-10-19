@@ -28,11 +28,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (username, password) => {
-    // Simulate API call
+    // Simulate API call for authentication
     setLoading(true);
     try {
-      // Mock authentication - in real app, this would be an API call
-      if (username && password) {
+      // Mock authentication - simple check for demo
+      if (username && password === 'password') {
         const userData = {
           id: 1,
           username,
@@ -57,6 +57,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    // Clear authentication data
     localStorage.removeItem('authToken');
     localStorage.removeItem('userData');
     setIsAuthenticated(false);
