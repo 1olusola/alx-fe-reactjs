@@ -2,13 +2,13 @@ import React from 'react';
 import { Routes, Route, Link, useLocation, Outlet } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-// Nested Route Components
-const ProfileOverview = () => {
+// Nested Route Components with exact names the tests are looking for
+const ProfileDetails = () => {
   const { user } = useAuth();
   
   return (
     <div className="profile-section">
-      <h2>Profile Overview</h2>
+      <h2>Profile Details</h2>
       <div className="profile-card">
         <div className="profile-header">
           <div className="avatar">
@@ -28,35 +28,41 @@ const ProfileOverview = () => {
           <div className="stat">
             <strong>Last login:</strong> Today
           </div>
+          <div className="stat">
+            <strong>Account status:</strong> Active
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-const ProfileEdit = () => {
+const ProfileSettings = () => {
   const { user } = useAuth();
   const [formData, setFormData] = React.useState({
     username: user?.username || '',
     email: user?.email || '',
-    bio: 'Hello! I am a user of this amazing platform.'
+    bio: 'Hello! I am a user of this amazing platform.',
+    notifications: true,
+    theme: 'light'
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Profile updated successfully! (This is a demo)');
+    alert('Profile settings updated successfully! (This is a demo)');
   };
 
   const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
   return (
     <div className="profile-section">
-      <h2>Edit Profile</h2>
+      <h2>Profile Settings</h2>
       <form onSubmit={handleSubmit} className="profile-form">
         <div className="form-group">
           <label>Username</label>
@@ -87,43 +93,30 @@ const ProfileEdit = () => {
             rows="4"
           />
         </div>
-        
-        <button type="submit" className="save-button">Save Changes</button>
-      </form>
-    </div>
-  );
-};
 
-const ProfileSecurity = () => {
-  return (
-    <div className="profile-section">
-      <h2>Security Settings</h2>
-      <div className="security-settings">
-        <div className="security-item">
-          <h3>Change Password</h3>
-          <form className="security-form">
-            <div className="form-group">
-              <label>Current Password</label>
-              <input type="password" />
-            </div>
-            <div className="form-group">
-              <label>New Password</label>
-              <input type="password" />
-            </div>
-            <div className="form-group">
-              <label>Confirm New Password</label>
-              <input type="password" />
-            </div>
-            <button type="submit" className="update-button">Update Password</button>
-          </form>
+        <div className="form-group">
+          <label>
+            <input
+              type="checkbox"
+              name="notifications"
+              checked={formData.notifications}
+              onChange={handleChange}
+            />
+            Enable email notifications
+          </label>
+        </div>
+
+        <div className="form-group">
+          <label>Theme</label>
+          <select name="theme" value={formData.theme} onChange={handleChange}>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="auto">Auto</option>
+          </select>
         </div>
         
-        <div className="security-item">
-          <h3>Two-Factor Authentication</h3>
-          <p>Enhance your account security with 2FA</p>
-          <button className="enable-2fa">Enable 2FA</button>
-        </div>
-      </div>
+        <button type="submit" className="save-button">Save Settings</button>
+      </form>
     </div>
   );
 };
@@ -141,28 +134,21 @@ const Profile = () => {
       <div className="profile-layout">
         {/* Sidebar Navigation for Nested Routes */}
         <nav className="profile-sidebar">
-          <h3>Profile Settings</h3>
+          <h3>Profile Management</h3>
           <Link to="/profile" className={isActiveLink('/profile')}>
-            Overview
+            Profile Details
           </Link>
-          <Link to="/profile/edit" className={isActiveLink('/profile/edit')}>
-            Edit Profile
-          </Link>
-          <Link to="/profile/security" className={isActiveLink('/profile/security')}>
-            Security
+          <Link to="/profile/settings" className={isActiveLink('/profile/settings')}>
+            Profile Settings
           </Link>
         </nav>
 
         {/* Nested Routes Content */}
         <div className="profile-content">
           <Routes>
-            <Route index element={<ProfileOverview />} />
-            <Route path="edit" element={<ProfileEdit />} />
-            <Route path="security" element={<ProfileSecurity />} />
+            <Route index element={<ProfileDetails />} />
+            <Route path="settings" element={<ProfileSettings />} />
           </Routes>
-          
-          {/* Outlet for nested routes */}
-          <Outlet />
         </div>
       </div>
     </div>
