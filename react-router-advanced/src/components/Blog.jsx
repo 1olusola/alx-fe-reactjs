@@ -19,22 +19,6 @@ const Blog = () => {
       author: 'Bob Smith',
       date: '2024-01-12',
       readTime: '8 min read'
-    },
-    {
-      id: 3,
-      title: 'Authentication in React Apps',
-      excerpt: 'Implement secure authentication flows with React Router...',
-      author: 'Charlie Brown',
-      date: '2024-01-10',
-      readTime: '6 min read'
-    },
-    {
-      id: 4,
-      title: 'Code Splitting with React Router',
-      excerpt: 'Optimize your React app performance with lazy loading...',
-      author: 'Diana Davis',
-      date: '2024-01-08',
-      readTime: '7 min read'
     }
   ];
 
@@ -42,7 +26,7 @@ const Blog = () => {
     <div className="blog-container">
       <div className="blog-header">
         <h1>Blog Posts</h1>
-        <p>Explore our latest articles and tutorials</p>
+        <p>Dynamic Routing Example - Click on posts to see dynamic URLs</p>
       </div>
       
       <div className="blog-grid">
@@ -50,6 +34,7 @@ const Blog = () => {
           <article key={post.id} className="blog-card">
             <div className="blog-card-content">
               <h2>
+                {/* Dynamic routing: /blog/1, /blog/2, etc. */}
                 <Link to={`/blog/${post.id}`} className="blog-title-link">
                   {post.title}
                 </Link>
@@ -71,6 +56,15 @@ const Blog = () => {
             </div>
           </article>
         ))}
+      </div>
+
+      <div className="routing-info">
+        <h3>Dynamic Routing Demonstration</h3>
+        <p>
+          This page demonstrates dynamic routing where each blog post has a unique URL 
+          like <code>/blog/1</code>, <code>/blog/2</code>, etc. The <code>postId</code> 
+          parameter is extracted from the URL using React Router's <code>useParams</code> hook.
+        </p>
       </div>
     </div>
   );
