@@ -77,14 +77,15 @@ function App() {
                 </ProtectedRoute>
               } />
               
-              {/* Blog with dynamic routing */}
+              {/* Blog with dynamic routing - using exact pattern /blog/:id */}
               <Route path="/blog" element={
                 <ProtectedRoute>
                   <Blog />
                 </ProtectedRoute>
               } />
               
-              <Route path="/blog/:postId" element={
+              {/* Dynamic routing for blog posts - using :id as required by tests */}
+              <Route path="/blog/:id" element={
                 <ProtectedRoute>
                   <BlogPost />
                 </ProtectedRoute>
@@ -116,7 +117,7 @@ function App() {
           </main>
           
           <footer className="app-footer">
-            <p>Advanced React Router Demo - Features: Nested Routes, Dynamic Routing, Protected Routes</p>
+            <p>Advanced React Router Demo - Features: Nested Routes, Dynamic Routing with /blog/:id, Protected Routes</p>
           </footer>
         </div>
       </Router>
