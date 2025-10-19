@@ -1,34 +1,111 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-const schema = Yup.object({
-  username: Yup.string().required("Required"),
-  email:    Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string().min(4, "Too short").required("Required")
+// Validation schema using Yup
+const validationSchema = Yup.object().shape({
+  username: Yup.string()
+    .required('Username is required')
+    .min(3, 'Username must be at least 3 characters'),
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Email is required'),
+  password: Yup.string()
+    .required('Password is required')
+    .min(6, 'Password must be at least 6 characters')
 });
 
-export default function FormikForm() {
+const FormikForm = () => {
+  const initialValues = {
+    username: '',
+    email: '',
+    password: ''
+  };
+
+  const handleSubmit = (values, { setSubmitting, resetForm }) => {
+    console.log('Form submitted:', values);
+    // Mock API call
+    setTimeout(() => {
+      alert('Registration successful!');
+      setSubmitting(false);
+      resetForm();
+    }, 1000);
+  };
+
   return (
     <Formik
-      initialValues={{ username: "", email: "", password: "" }}
-      validationSchema={schema}
-      onSubmit={(vals, { resetForm }) => {
-        alert("Registered (Formik): " + JSON.stringify(vals, null, 2));
-        resetForm();
-      }}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
     >
-      <Form>
-        <Field name="username" placeholder="Username" />
-        <ErrorMessage name="username" component="div" style={{ color: "red" }} />
+      {({ isSubmitting, errors, touched }) => (
+        <Form style={{ maxWidth: '400px', margin: '20px' }}>
+          <div style={{ marginBottom: '15px' }}>
+            <label htmlFor="username" style={{ display: 'block', marginBottom: '5px' }}>
+              Username:
+            </label>
+            <Field 
+              type="text" 
+              name="username" 
+              style={{ 
+                width: '100%', 
+                padding: '8px',
+                border: errors.username && touched.username ? '1px solid red' : '1px solid #ccc'
+              }}
+            />
+            <ErrorMessage name="username" component="div" style={{ color: 'red', fontSize: '14px' }} />
+          </div>
 
-        <Field name="email" placeholder="Email" />
-        <ErrorMessage name="email" component="div" style={{ color: "red" }} />
+          <div style={{ marginBottom: '15px' }}>
+            <label htmlFor="email" style={{ display: 'block', marginBottom: '5px' }}>
+              Email:
+            </label>
+            <Field 
+              type="email" 
+              name="email" 
+              style={{ 
+                width: '100%', 
+                padding: '8px',
+                border: errors.email && touched.email ? '1px solid red' : '1px solid #ccc'
+              }}
+            />
+            <ErrorMessage name="email" component="div" style={{ color: 'red', fontSize: '14px' }} />
+          </div>
 
-        <Field name="password" placeholder="Password" type="password" />
-        <ErrorMessage name="password" component="div" style={{ color: "red" }} />
+          <div style={{ marginBottom: '15px' }}>
+            <label htmlFor="password" style={{ display: 'block', marginBottom: '5px' }}>
+              Password:
+            </label>
+            <Field 
+              type="password" 
+              name="password" 
+              style={{ 
+                width: '100%', 
+                padding: '8px',
+                border: errors.password && touched.password ? '1px solid red' : '1px solid #ccc'
+              }}
+            />
+            <ErrorMessage name="password" component="div" style={{ color: 'red', fontSize: '14px' }} />
+          </div>
 
-        <button type="submit">Register</button>
-      </Form>
+          <button 
+            type="submit" 
+            disabled={isSubmitting}
+            style={{
+              padding: '10px 20px',
+              backgroundColor: isSubmitting ? '#6c757d' : '#007bff',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: isSubmitting ? 'not-allowed' : 'pointer'
+            }}
+          >
+            {isSubmitting ? 'Submitting...' : 'Register'}
+          </button>
+        </Form>
+      )}
     </Formik>
   );
-}
+};
+
+export default FormikForm;
