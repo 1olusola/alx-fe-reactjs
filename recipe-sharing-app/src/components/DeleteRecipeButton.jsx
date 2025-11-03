@@ -1,4 +1,4 @@
-import useRecipeStore from '../store/recipeStore'
+import useRecipeStore from './recipeStore'
 
 export default function DeleteRecipeButton({ id, onDeleted }) {
   const del = useRecipeStore((s) => s.deleteRecipe)
