@@ -1,4 +1,4 @@
-import useRecipeStore from '../store/recipeStore'
+import useRecipeStore from './recipeStore'
 
 export default function SearchBar() {
   const setTerm = useRecipeStore((s) => s.setSearchTerm)
