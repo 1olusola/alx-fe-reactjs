@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import useRecipeStore from '../store/recipeStore'
+import useRecipeStore from './recipeStore'
 
 export default function EditRecipeForm({ recipe }) {
   const update = useRecipeStore((s) => s.updateRecipe)
