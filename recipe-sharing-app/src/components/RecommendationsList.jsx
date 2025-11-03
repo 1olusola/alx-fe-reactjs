@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import useRecipeStore from '../store/recipeStore'
+import useRecipeStore from './recipeStore'
 
 export default function RecommendationsList() {
   const generate = useRecipeStore((s) => s.generateRecommendations)
